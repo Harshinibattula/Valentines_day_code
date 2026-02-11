@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Be My Valentine 💘</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@1,700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:linear-gradient(180deg,#ffe6f0,#ffd1e6);
+  font-family:system-ui,sans-serif;
+  overflow:hidden;
+}
+
+.card{
+  width:92%;
+  max-width:380px;
+  background:#ffffffdd;
+  border-radius:24px;
+  padding:18px;
+  text-align:center;
+  box-shadow:0 15px 35px rgba(0,0,0,.15);
+  z-index:2;
+}
+
+h1{
+  font-family:'Bodoni Moda',serif;
+  font-style:italic;
+  font-size:26px;
+  color:#ff2f7a;
+  margin:12px 0 16px;
+}
+
+.main-gif{
+  width:85%;
+  max-width:240px;
+  border-radius:16px;
+  box-shadow:0 6px 16px rgba(0,0,0,.15);
+}
+
+.buttons{
+  margin-top:20px;
+  display:flex;
+  justify-content:space-around;
+}
+
+button{
+  padding:12px 24px;
+  border-radius:999px;
+  border:none;
+  font-size:16px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+#yesBtn{
+  background:#ff2f7a;
+  color:#fff;
+}
+
+#noBtn{
+  background:#e5e7eb;
+}
+
+.invalid{
+  margin-top:12px;
+  color:#ff0000;
+  font-weight:600;
+  display:none;
+}
+
+/* RESULT PAGE */
+.result{
+  display:none;
+}
+
+.yay-text{
+  font-size:20px;
+  margin-bottom:10px;
+}
+
+.fire-gif{
+  width:85%;
+  max-width:260px;
+  border-radius:16px;
+}
+
+/* SIDE IMAGES */
+.side-images{
+  position:fixed;
+  top:50%;
+  transform:translateY(-50%);
+  display:none;
+  flex-direction:column;
+  gap:12px;
+}
+
+.left{left:8px}
+.right{right:8px}
+
+.side-images img{
+  width:70px;
+  height:70px;
+  object-fit:cover;
+  border-radius:12px;
+  box-shadow:0 4px 12px rgba(0,0,0,.15);
+}
+
+@media(max-width:360px){
+  .side-images img{
+    width:60px;
+    height:60px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="side-images left" id="leftPics">
+  <img src="p1.jpeg">
+  <img src="p2.jpeg">
+</div>
+
+<div class="side-images right" id="rightPics">
+  <img src="p3.jpeg">
+  <img src="p4.jpeg">
+</div>
+
+<div class="card">
+  <!-- PAGE 1 -->
+  <div id="page1">
+    <img class="main-gif"
+      src="https://tenor.com/view/bubu-dudu-prince-bubu-dudu-princess-bubu-dudu-bubududukiwi-gif-116379327183148812.gif">
+
+    <h1>Cutuu, will you be my Valentine? 💘</h1>
+
+    <div class="buttons">
+      <button id="yesBtn">Yes 💖</button>
+      <button id="noBtn">No 🙈</button>
+    </div>
+
+    <div class="invalid" id="invalidText">Invalid answer ❌</div>
+  </div>
+
+  <!-- PAGE 2 -->
+  <div class="result" id="page2">
+    <div class="yay-text">Yayyy 🌹</div>
+    <img class="fire-gif"
+      src="https://media1.tenor.com/m/ZzGMPRG5ckcAAAAC/danimih-miha.gif">
+  </div>
+</div>
+
+<audio id="music" loop>
+  <source src="snowman_ringtone2020.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const yesBtn=document.getElementById("yesBtn");
+const noBtn=document.getElementById("noBtn");
+const invalid=document.getElementById("invalidText");
+
+const page1=document.getElementById("page1");
+const page2=document.getElementById("page2");
+
+const leftPics=document.getElementById("leftPics");
+const rightPics=document.getElementById("rightPics");
+
+const confettiCanvas=document.createElement("canvas");
+confettiCanvas.style.position="fixed";
+confettiCanvas.style.inset=0;
+confettiCanvas.style.pointerEvents="none";
+document.body.appendChild(confettiCanvas);
+
+const confettiInstance=confetti.create(confettiCanvas,{resize:true});
+
+noBtn.onclick=()=>{
+  invalid.style.display="block";
+};
+
+yesBtn.onclick=()=>{
+  page1.style.display="none";
+  page2.style.display="block";
+  leftPics.style.display="flex";
+  rightPics.style.display="flex";
+
+  const end=Date.now()+1500;
+  (function frame(){
+    confettiInstance({
+      particleCount:8,
+      spread:100,
+      startVelocity:40,
+      origin:{x:Math.random(),y:Math.random()*0.5}
+    });
+    if(Date.now()<end)requestAnimationFrame(frame);
+  })();
+};
+
+document.body.addEventListener("click",()=>{
+  document.getElementById("music").play();
+},{once:true});
+</script>
+
+</body>
+</html>
