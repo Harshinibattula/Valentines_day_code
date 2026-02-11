@@ -84,10 +84,12 @@ button{
 }
 
 .yay-text{
-  font-size:20px;
+  font-size:22px;
   margin-bottom:10px;
+  font-weight:700;
 }
 
+/* GIF */
 .fire-gif{
   width:85%;
   max-width:260px;
@@ -126,6 +128,7 @@ button{
 
 <body>
 
+<!-- SIDE IMAGES -->
 <div class="side-images left" id="leftPics">
   <img src="p1.jpeg">
   <img src="p2.jpeg">
@@ -137,12 +140,13 @@ button{
 </div>
 
 <div class="card">
+
   <!-- PAGE 1 -->
   <div id="page1">
     <img class="main-gif"
       src="https://tenor.com/view/bubu-dudu-prince-bubu-dudu-princess-bubu-dudu-bubududukiwi-gif-116379327183148812.gif">
 
-    <h1>Cutuu, will you be my Valentine? 💘</h1>
+    <h1>Kannamma, will you be my Valentine? 💘</h1>
 
     <div class="buttons">
       <button id="yesBtn">Yes 💖</button>
@@ -160,54 +164,63 @@ button{
   </div>
 </div>
 
+<!-- MUSIC -->
 <audio id="music" loop>
   <source src="snowman_ringtone2020.mp3" type="audio/mpeg">
 </audio>
 
 <script>
-const yesBtn=document.getElementById("yesBtn");
-const noBtn=document.getElementById("noBtn");
-const invalid=document.getElementById("invalidText");
+const yesBtn = document.getElementById("yesBtn");
+const noBtn = document.getElementById("noBtn");
+const invalid = document.getElementById("invalidText");
 
-const page1=document.getElementById("page1");
-const page2=document.getElementById("page2");
+const page1 = document.getElementById("page1");
+const page2 = document.getElementById("page2");
 
-const leftPics=document.getElementById("leftPics");
-const rightPics=document.getElementById("rightPics");
+const leftPics = document.getElementById("leftPics");
+const rightPics = document.getElementById("rightPics");
 
-const confettiCanvas=document.createElement("canvas");
-confettiCanvas.style.position="fixed";
-confettiCanvas.style.inset=0;
-confettiCanvas.style.pointerEvents="none";
+const music = document.getElementById("music");
+
+/* CONFETTI */
+const confettiCanvas = document.createElement("canvas");
+confettiCanvas.style.position = "fixed";
+confettiCanvas.style.inset = 0;
+confettiCanvas.style.pointerEvents = "none";
 document.body.appendChild(confettiCanvas);
 
-const confettiInstance=confetti.create(confettiCanvas,{resize:true});
+const confettiInstance = confetti.create(confettiCanvas,{ resize:true });
 
-noBtn.onclick=()=>{
-  invalid.style.display="block";
+/* NO BUTTON */
+noBtn.onclick = () => {
+  alert("❌ Wrong choice 😜\nTry again, Kannamma 💕");
+
+  invalid.style.display = "block";
+  setTimeout(() => {
+    invalid.style.display = "none";
+  }, 1500);
 };
 
-yesBtn.onclick=()=>{
-  page1.style.display="none";
-  page2.style.display="block";
-  leftPics.style.display="flex";
-  rightPics.style.display="flex";
+/* YES BUTTON */
+yesBtn.onclick = () => {
+  music.play();
 
-  const end=Date.now()+1500;
+  page1.style.display = "none";
+  page2.style.display = "block";
+  leftPics.style.display = "flex";
+  rightPics.style.display = "flex";
+
+  const end = Date.now() + 1500;
   (function frame(){
     confettiInstance({
       particleCount:8,
       spread:100,
       startVelocity:40,
-      origin:{x:Math.random(),y:Math.random()*0.5}
+      origin:{x:Math.random(), y:Math.random()*0.5}
     });
-    if(Date.now()<end)requestAnimationFrame(frame);
+    if(Date.now() < end) requestAnimationFrame(frame);
   })();
 };
-
-document.body.addEventListener("click",()=>{
-  document.getElementById("music").play();
-},{once:true});
 </script>
 
 </body>
